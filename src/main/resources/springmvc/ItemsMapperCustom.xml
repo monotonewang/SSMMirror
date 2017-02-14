@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.springmvc.mapper.ItemsMapperCustom">
+
+    <!-- 商品查询的sql片段
+    建议是以单表为单位定义查询条件
+    建议将常用的查询条件都写出来
+     -->
+    <sql id="query_items_where">
+        <if test="itemsCustom!=null">
+            <if test="itemsCustom.name!=null and itemsCustom.name!=''">
+                and name like '%${itemsCustom.name}%'
+            </if>
+            <if test="itemsCustom.id!=null">
+                and id = #{itemsCustom.id}
+            </if>
+
+        </if>
+
+    </sql>
+
+    <!-- 商品查询
+    parameterType：输入 查询条件
+    -->
+
+    <!--<select id="findItemsList" parameterType="com.demo.springmvc.potemQueryVo"-->
+    <!--resultType="com.demo.springmvc.potemsCustom">-->
+    <!--SELECT * FROM items -->
+    <!--<where>-->
+    <!--<include refid="query_items_where"/>-->
+    <!--</where>-->
+    <!--</select>-->
+
+    <select id="findItemsList"
+            resultType="com.demo.springmvc.po.ItemCustom">
+		SELECT * FROM items
+	</select>
+    <!--根据id查询相应的扩展类-->
+
+    <sql id="Base_Column_List">
+		id, name, price, pic, createtime
+	</sql>
+
+    <sql id="Blob_Column_List">
+		detail
+	</sql>
+
+    <resultMap id="BaseResultMap" type="com.demo.springmvc.po.ItemCustom">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="REAL"/>
+        <result column="pic" property="pic" jdbcType="VARCHAR"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="ResultMapWithBLOBs" type="com.demo.springmvc.po.ItemCustom" extends="BaseResultMap">
+        <result column="detail" property="detail" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from items
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!--<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.demo.springmvc.potemCustom" >-->
+    <!--update items-->
+    <!--set name = #{name,jdbcType=VARCHAR},-->
+    <!--price = #{price,jdbcType=REAL},-->
+    <!--pic = #{pic,jdbcType=VARCHAR},-->
+    <!--createtime = #{createtime,jdbcType=TIMESTAMP},-->
+    <!--detail = #{detail,jdbcType=LONGVARCHAR}-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+    <!--</update>-->
+
+    <!--detail = #{detail,jdbcType=LONGVARCHAR}-->
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.demo.springmvc.po.ItemCustom">
+		update items
+		set name = #{item.name,jdbcType=VARCHAR},
+		price = #{item.price,jdbcType=REAL},
+		pic = #{item.pic,jdbcType=VARCHAR},
+		createtime = #{item.createtime,jdbcType=TIMESTAMP}
+		where id = #{item.id,jdbcType=INTEGER}
+	</update>
+
+</mapper>

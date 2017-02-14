@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--读取外部的properties文件，-->
+    <properties resource="jdbc.properties"/>
+    <settings>
+        <!--开启延迟加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+    <typeAliases>
+        <!--批量定义别名-->
+        <package name="com.demo.mybatis.mapper.pojo"/>
+        <!--单个定义别名-->
+        <!--<typeAlias type="com.demo.mybatis.mapperpojo.User" alias="userAlias"/>-->
+    </typeAliases>
+    <plugins>
+        <!--PageHelper所在包名-->
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <!--数据库方言-->
+            <property name="dialect" value="mysql"/>
+            <!--当设置为true的时候，使用RowBound查询进行查询，会去查询出来count-->
+            <property name="rowBoundsWithCount" value="true"/>
+        </plugin>
+    </plugins>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url"
+                          value="${jdbc.urlMyBatis}"/>
+                <property name="username" value="${jdbc.user}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--通过resource引入mapper的映射文件-->
+        <!--<mapper resource="mybatis\mapper.xml"/>-->
+        <!--<mapper resource="mybatis\spring\userDao.xml"/>-->
+        <!--<mapper resource="mybatis\OrdersMapper.xml"/>-->
+        <!--<mapper resource="mybatis\UserMapper.xml"/>-->
+        <!--<mapper resource="UserMapper.xml"/>-->
+        <!--通过class引用mapper接口，要求mapper.xml和mapper.java在同一个包下面-->
+        <!--如果运行不成功，把xml的文件复制到target下面-->
+        <!--<mapper class="com.demo.mybatis.mappermapper.UserMapper"/>-->
+        <!--通过package批量扫描包功能，要求mapper.xml和mapper.java在同一个包下面-->
+        <!--<package name="com.demo.mybatis.mapper.mapper"/>-->
+        <!--<package name="com.demo.mybatis.relationmapper.mapper"/>-->
+        <!--<mapper url=""/>-->
+    </mappers>
+</configuration>

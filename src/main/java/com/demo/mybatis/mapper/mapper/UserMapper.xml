@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--insert into user (id,username,birthday,sex,address) values(null,'xxx','2015-02-03','1','beijng')-->
+<!--delete from  user where id=16-->
+
+<mapper namespace="com.demo.mybatis.mapper.mapper.UserMapper">
+    <!-- 将用户查询条件定义为sql片段  建议对单表的查询条件单独抽取sql片段，提高公用性
+    注意：不要将where标签放在sql片段-->
+    <sql id="findUserWhere">
+        <if test="userCustom!=null">
+            <if test="userCustom.username!=null and userCustom.username!=''">
+                username like '%${userCustom.username}%'
+            </if>
+            <if test="userCustom.sex!=null and userCustom.sex!=''">
+                sex like #{userCustom.sex}
+            </if>
+--             collection:集合的属性
+--             open:开始循环的串
+--             close:结束循环拼接的串
+--             item:每次循环取到的对象
+--             separator:每两次循环中间拼接的串
+--             SELECT id ,username ,birthday  FROM USER WHERE username LIKE '%小明%' AND id IN (22)
+            <foreach collection="ids" open="AND id IN (" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+--             第二种方法
+            <!-- 	 SELECT id ,username ,birthday  FROM USER WHERE username LIKE '%小明%' AND (id = 16 OR id = 22 OR id = 25)
+                 <foreach collection="ids" open=" AND ( " close=")" item="id" separator="OR">
+                    id = #{id}
+                </foreach>  -->
+
+        </if>
+    </sql>
+
+    <select id="selectCount" resultType="int">
+        SELECT COUNT(*) FROM USER
+    </select>
+    <select id="findUserById" parameterType="int" resultType="com.demo.mybatis.mapper.pojo.User">
+        SELECT * FROM USER WHERE id=#{id}
+    </select>
+    <!--下面的是sql拼接-->
+    <select id="findUserByName" parameterType="java.lang.String" resultType="com.demo.mybatis.mapper.pojo.User">
+        SELECT * FROM USER WHERE username like '%${value}%'
+    </select>
+    <select id="findAllUser" resultType="com.demo.mybatis.mapper.pojo.User">
+        SELECT * FROM USER
+    </select>
+    <select id="insertUser" parameterType="User">
+        insert into user (id,username,birthday,sex,address) values(null,#{username},#{birthday},#{sex},#{address})
+    </select>
+    <!--这里使用了mybatis自定义别名，与大小写无关-->
+    <insert id="insertUser1" useGeneratedKeys="true" parameterType="user">
+        <selectKey keyProperty="id" order="AFTER" resultType="Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into user (username,birthday,sex,address) values(#{username},#{birthday},#{sex},#{address})
+    </insert>
+    <delete id="deleteUserById" parameterType="int">
+       delete from  userdel where id=#{id}
+    </delete>
+    <update id="updateUser" parameterType="com.demo.mybatis.mapper.pojo.User">
+    UPDATE user set username=#{username},birthday=#{birthday},sex=#{sex},address=#{address} where id=#{id}
+    </update>
+    <!--po-->
+    <select id="findUserList" parameterType="com.demo.mybatis.mapper.pojo.UserQueryVo" resultType="user">
+        SELECT * FROM USER WHERE username like '%${userCustom.username}%'
+    </select>
+    <select id="findUserCount" parameterType="com.demo.mybatis.mapper.pojo.UserQueryVo" resultType="int">
+        select count(*) from user where username like '%${userCustom.username}%'
+    </select>
+    <!--查询属性映射-->
+    <resultMap id="userListResultMap" type="com.demo.mybatis.mapper.pojo.User">
+        <id column="id_" property="id"></id>
+        <result column="username_" property="username"></result>
+        <!--<result column="birthday_" property="birthday"></result>-->
+    </resultMap>
+    <select id="findAllResultMap" resultMap="userListResultMap" resultType="user">
+        select id id_,username username_ from user where id=1
+    </select>
+    <!--动态sql-->
+    <select id="dynamicFindUser" parameterType="com.demo.mybatis.mapper.pojo.UserQueryVo" resultType="user">
+        select * from user
+        <!-- where标签相当于where关键字，可以自动去除第一个and -->
+        <where>
+            <!-- 引用sql片段，如果sql片段和引用处不在同一个mapper必须前边加namespace -->
+            <include refid="findUserWhere"/>
+        </where>
+    </select>
+
+    <select id="dynamicFindCount" parameterType="com.demo.mybatis.mapper.pojo.UserQueryVo" resultType="int">
+        select Count(*) from user
+        <!-- where标签相当于where关键字，可以自动去除第一个and -->
+        <where>
+            <include refid="findUserWhere"/>
+        </where>
+    </select>
+
+
+</mapper>

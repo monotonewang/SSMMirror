@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--https://api.github.com/repos/montotone/SpringMirror/commits-->
+
+    <!--==========================入门调用方法程序============================-->
+    <bean id="helloService" class="com.demo.spring.basic.HelloServiceImpl">
+        <property name="info" value="Rick"/>
+    </bean>
+
+    <!-- 无参数的构造方法的实例化-->
+    <bean name="bean1" class="com.demo.spring.bean.Bean1"/>
+    <!--静态工厂模式实例化-->
+    <bean id="bean2" class="com.demo.spring.bean.Bean2Factory" factory-method="getBean2"/>
+    <!-- 实例化工厂模式-->
+    <bean id="bean3" factory-bean="bean3Factory" factory-method="getBean3"/>
+    <bean id="bean3Factory" class="com.demo.spring.bean.Bean3Factory"/>
+    <!--默认是单例的，如果是prototype 那么就是多例的。。。-->
+    <bean id="customer" class="com.demo.spring.bean.id.Customer" scope="prototype"/>
+    <bean id="product" class="com.demo.spring.bean.id.Product" init-method="setup" destroy-method="teardown">
+        <property name="name" value="getValue"/>
+    </bean>
+    <!--bean的生命周期-->
+    <bean id="customerService" class="com.demo.spring.bean.life.CustomerServiceImpl" init-method="setup"
+          destroy-method="teardown">
+        <property name="name" value="zhangsan"/>
+    </bean>
+    <!-- Bean 处理类-->
+    <!--<bean class="com.demo.spring.bean.life.MyBeanPostProcessor"/>-->
+
+    <!--====================================属性注入 =======================================-->
+
+    <!--1.构造器的属性注入-->
+    <bean id="car" class="com.demo.spring.bean.property.Car">
+        <constructor-arg index="0" value="benzi"/>
+        <constructor-arg index="1" value="2000.10"/>
+    </bean>
+    <!--2.通过setter方法注入属性-->
+    <!--<bean id="car2" class="com.demo.com.demo.spring.bean.property.Car2">-->
+    <!--<property name="name"  value="QQ"/>-->
+    <!--<property name="price"  value="200.10"/>-->
+    <!--3.通过名称空间P...注入属性-->
+    <!--<bean id="car2" class="com.demo.com.demo.spring.bean.property.Car2" p:name="baoma" p:price="100.10"/>-->
+    <!--4.spEL写法-->
+    <bean id="car2" class="com.demo.spring.bean.property.Car2">
+        <property name="name" value="#{'dazong cc'}"/>
+        <property name="price" value="#{'120000'}"/>
+    </bean>
+    <bean id="person" class="com.demo.spring.bean.property.Person" p:name="zhangsan" p:car2-ref="car2"/>
+    <!--集合注入-->
+    <bean id="collectionBean" class="com.demo.spring.bean.property.CollectionBean">
+        <property name="list">
+            <list>
+                <value>zhangsan</value>
+                <value>xiaomi</value>
+            </list>
+        </property>
+        <property name="set">
+            <set>
+                <value>wangwu</value>
+                <value>wangwu2</value>
+            </set>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="aa" value="11"/>
+                <entry key="ab" value="22"/>
+            </map>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="username">aa</prop>
+                <prop key="password">pw</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--通过注解来注入bean属性-->
+    <!--<bean id="annoationService" class="com.demo.spring.bean.annotation.UserService" />-->
+
+    <!--<context:annotation-config/>-->
+    <!-- 打开Spring组件自动扫面，并配置要扫描的基本包 -->
+    <context:component-scan base-package="com.demo.spring.bean.annotation"/>
+    <context:component-scan base-package="com.demo.spring.bean.config"/>
+
+    <!--这种情况一般不用-->
+    <context:annotation-config/>
+
+    <!--=====================综合版(属性使用注解，类使用xml配置)=============================-->
+    <bean id="customerDao" class="com.demo.spring.bean.xmlorAnno.CustomerDao"/>
+    <bean id="customerService2" class="com.demo.spring.bean.xmlorAnno.CustomerService"/>
+
+    <!--加载其他配置文件-->
+    <!--<import resource="applicationContextjdbc.xml"/>-->
+    <!--web-->
+    <bean id="webUserService" class="com.demo.spring.web.service.UserService"/>
+
+    <!--============================不带切点的切面==============================================-->
+    <!--定义目标对象-->
+    <bean id="customerDaoAop" class="com.demo.spring.aop.CustomerDaoImpl"/>
+
+    <!--定义增强-->
+    <bean id="beforeAdvice" class="com.demo.spring.aop.MyBeforeAdvice"/>
+
+    <!-- Spring支持配置生成代理: -->
+    <bean id="customerDaoAopProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!-- 设置目标对象 -->
+        <property name="target" ref="customerDaoAop"/>
+        <!-- 设置实现的接口 ,value中写接口的全路径 -->
+        <property name="proxyInterfaces" value="com.demo.spring.aop.CustomerDao"/>
+        <!-- 需要使用value:要的名称 -->
+        <property name="interceptorNames" value="beforeAdvice"/>
+    </bean>
+
+    <!--==============================带切点的切面===============================================-->
+    <!--定义目标对象-->
+    <bean id="orderDao" class="com.demo.spring.aop.OrderDao"/>
+
+    <!--定义增强-->
+    <bean id="myAroundAdvice" class="com.demo.spring.aop.MyAroundAdvice"/>
+
+    <!--定义切点切面-->
+    <bean id="myPonitCutAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <!-- 定义表达式,规定哪些方法执行拦截 -->
+        <property name="patterns" value=".*add.*,.*delete.*"/>
+        <property name="advice" ref="myAroundAdvice"/>
+    </bean>
+
+    <!--定义生成代理对象-->
+    <bean id="orderDaoProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!--配置目标-->
+        <property name="target" ref="orderDao"/>
+        <!--针对类的代理-->
+        <property name="proxyTargetClass" value="true"/>
+        <!--在目标上应用增强-->
+        <property name="interceptorNames" value="myPonitCutAdvisor"/>
+    </bean>
+
+    <!--===============================按名称生成代理。Bean===========================-->
+    <!--定义目标对象-->
+    <bean id="customerDaoauto" class="com.demo.spring.aop.CustomerDaoImpl"/>
+    <bean id="orderDaoauto" class="com.demo.spring.aop.OrderDao"/>
+    <!--定义增强-->
+    <bean id="myBeforeAdviceauto" class="com.demo.spring.aop.MyBeforeAdvice"/>
+    <bean id="myAroundAdviceauto" class="com.demo.spring.aop.MyAroundAdvice"/>
+    <!-- 自动代理:按名称的代理 基于后处理Bean,后处理Bean不需要配置ID-->
+
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames" value="*auto"/>
+        <property name="interceptorNames" value="myBeforeAdviceauto"/>
+    </bean>
+    
+</beans>

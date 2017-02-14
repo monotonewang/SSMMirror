@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SSMMirror:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="SpringMirror.war">
+      <element id="artifact" artifact-name="SSMMirror:war exploded" />
+    </root>
+  </artifact>
+</component>

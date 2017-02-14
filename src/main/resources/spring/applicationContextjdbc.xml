@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url"
+                  value="jdbc:mysql://127.0.0.1:3306/jdbctest?characterEncoding=utf8&amp;useSSL=true&amp;generateSimpleParameterMetadata=true"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
+
+
+    <!-- 配置DBCP连接池 -->
+    <bean id="dataSourceDbcp" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url"
+                  value="jdbc:mysql://127.0.0.1:3306/jdbctest?characterEncoding=utf8&amp;useSSL=true&amp;generateSimpleParameterMetadata=true"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
+
+    <!-- 配置C3p0连接池 -->
+    <bean id="dataSourceC3p0" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl"
+                  value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <!--参数设置到属性文件中==第一种写法-->
+    <!--   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+           <property name="location" value="classpath:jdbc.properties"></property>
+       </bean>-->
+    <!--第二种写法-->
+
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!-- 定义jdbctemplate -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSourceC3p0"/>
+    </bean>
+
+    <bean id="userDaoJdbc" class="com.demo.spring.jdbc.crud.UserDao">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <!--<property name="dataSource" ref="dataSourceC3p0"/>-->
+    </bean>
+
+</beans>
