@@ -116,7 +116,7 @@ public class GoodController {
 	/**
 	 * 单独将商品类型的方法提出来，将方法返回值填充到request，在页面显示
 	 *
-	 * @return
+	 * @return 返回一个HashMap
 	 * @throws Exception
 	 */
 	@ModelAttribute("itemsType")
