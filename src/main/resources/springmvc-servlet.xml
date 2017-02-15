@@ -43,21 +43,21 @@
     <!--注册属性编辑器-->
     <!--<bean id="customPropertyEditor" class="com.demo.springmvc.controller.propertyeditor.CustomPropertyEditor"/>-->
 
-    <!-- 自定义webBinder -->
-    <!--<bean id="customBinder" class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">-->
-        <!-- 使用converter进行参数转 -->
-        <!--<property name="conversionService" ref="conversionService" />-->
-
-        <!-- propertyEditorRegistrars用于属性编辑器 -->
-        <!--<property name="propertyEditorRegistrars">-->
-            <!--<list>-->
-                <!--<ref bean="customPropertyEditor"/>-->
-            <!--</list>-->
-        <!--</property>-->
-    <!--</bean>-->
-
     <!--处理器映射器-->
     <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>-->
+
+    <!-- 自定义webBinder -->
+    <!--<bean id="customBinder" class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">-->
+    <!-- 使用converter进行参数转 -->
+    <!--<property name="conversionService" ref="conversionService" />-->
+
+    <!-- propertyEditorRegistrars用于属性编辑器 -->
+    <!--<property name="propertyEditorRegistrars">-->
+    <!--<list>-->
+    <!--<ref bean="customPropertyEditor"/>-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--</bean>-->
 
     <!-- 处理器适配器-注解适配器 -->
     <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
@@ -67,8 +67,6 @@
 
 
     <!--自定义参数绑定使用转化器-->
-    <!--方法一:不适用   mvc-annotation-driven-->
-    <!--注册使用转化器-->
     <bean id="conversionService"
           class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="converters">
@@ -78,6 +76,10 @@
             </list>
         </property>
     </bean>
+    <!--方法一:不适用   mvc-annotation-driven-->
+    <!--注册使用转化器-->
+
+    <!--参考 自定义webBinder 和 处理器适配器-注解适配器 -->
 
     <!--方法二：使用   mvc-annotation-driven-->
     <!-- 通过annotation-driven可以替代下边的处理器映射器和适配器 -->

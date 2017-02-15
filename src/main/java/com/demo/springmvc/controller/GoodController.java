@@ -6,6 +6,7 @@ import com.demo.springmvc.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,7 +36,7 @@ public class GoodController {
 	 * @return 模型和视图
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/queryItem", method = {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value = "/queryItem", method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView queryItem() throws Exception {
 
 //		//调用service查询商品列表
@@ -56,11 +57,13 @@ public class GoodController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/editItem", method = {RequestMethod.GET})
-	public String editItems(Model model, HttpServletRequest request) throws Exception {
-		//获取商品id;
-		String id = request.getParameter("id");
-		Integer integer = Integer.valueOf(id);
-		ItemCustom itemList = itemService.findItemsById(integer);
+	public String editItems(Model model, HttpServletRequest request, Integer id) throws Exception {
+		//通过request-获取商品id;
+//		String idx = request.getParameter("id");
+//		Integer integer = Integer.valueOf(idx);
+		//简单数据回显
+		model.addAttribute("id", id);
+		ItemCustom itemList = itemService.findItemsById(id);
 		model.addAttribute("item", itemList);
 		return "editItem";
 	}
@@ -69,16 +72,19 @@ public class GoodController {
 	//itemsQueryVo是包装类型的pojo
 //	public String editItemSubmit(Integer id,ItemsCustom itemsCustom,
 //			ItemsQueryVo itemsQueryVo)throws Exception{
-	@RequestMapping(value = "/editItemSubmit",method = {RequestMethod.POST})
-	public String editItemSubmit(HttpServletRequest request,Integer id, ItemCustom itemCustom) throws Exception {
+	@RequestMapping(value = "/editItemSubmit", method = {RequestMethod.POST})
+	public String editItemSubmit(Model model, HttpServletRequest request, Integer id, @ModelAttribute(value = "itemCustom") ItemCustom itemCustom) throws Exception {
+
+		//表单提交出错，重新回到表单。用户填写数据，将提交的参数在页面上回显。
+		model.addAttribute("id", id);
 
 		//调用service更新商品信息
 		itemService.updateByPrimaryKeyWithBLOBs(id, itemCustom);
 		//重定向。
-//		return "redirect:queryItem.action";
+		return "redirect:queryItem.action";
 
 		//转发
-		return "forward:queryItem.action";
+//		return "forward:queryItem.action";
 	}
 
 	/**
