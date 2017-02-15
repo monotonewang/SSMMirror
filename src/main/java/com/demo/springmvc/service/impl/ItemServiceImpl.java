@@ -38,16 +38,18 @@ public class ItemServiceImpl implements ItemService {
 
 	/**
 	 * 根据id查找相应的pojo
+	 *
 	 * @param id
 	 * @return
 	 * @throws Exception
 	 */
 	public ItemCustom findItemsById(int id) throws Exception {
-		return  itemsMapperCustom.selectByPrimaryKey(id);
+		return itemsMapperCustom.selectByPrimaryKey(id);
 	}
 
 	/**
 	 * 更新商品信息
+	 *
 	 * @param id         修改商品的id
 	 * @param itemCustom 修改商品的信息
 	 * @throws Exception
@@ -55,15 +57,15 @@ public class ItemServiceImpl implements ItemService {
 	public void updateByPrimaryKeyWithBLOBs(Integer id, ItemCustom itemCustom) throws Exception {
 		//写业务代码
 
-		Items items=new Items();
+		Items items = new Items();
 		//拷贝属性
-		BeanUtils.copyProperties(items,itemCustom);
+		BeanUtils.copyProperties(items, itemCustom);
 
 
-		System.out.println("service"+items);
+		System.out.println("service" + items);
 
 		//对于关键业务数据的非空校验
-		if(id == null){
+		if (id == null) {
 			//抛出异常，提示调用接口的用户，id不能为空
 			//...
 		}
@@ -71,7 +73,24 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	/**
+	 * 删除商品
+	 *
+	 * @param delete_id
+	 * @throws Exception
+	 */
+	public int deleteItems(Integer[] delete_id) throws Exception {
+		if(delete_id.length<=0){
+			return 0;
+		}
+		for (int i = 0; i < delete_id.length; i++) {
+			return itemsMapper.deleteByPrimaryKey(i);
+		}
+		return 0;
+	}
+
+	/**
 	 * 测试数据
+	 *
 	 * @throws Exception
 	 */
 	@Test

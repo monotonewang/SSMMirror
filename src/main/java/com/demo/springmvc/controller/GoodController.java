@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by 7 on 2017/2/9.
@@ -70,10 +68,11 @@ public class GoodController {
 
 	//商品修改提交
 	//itemsQueryVo是包装类型的pojo
+	//@ModelAttribute 的pojo数据回显。
 //	public String editItemSubmit(Integer id,ItemsCustom itemsCustom,
 //			ItemsQueryVo itemsQueryVo)throws Exception{
 	@RequestMapping(value = "/editItemSubmit", method = {RequestMethod.POST})
-	public String editItemSubmit(Model model, HttpServletRequest request, Integer id, @ModelAttribute(value = "itemCustom") ItemCustom itemCustom) throws Exception {
+	public String editItemSubmit(Model model, Integer id, @ModelAttribute(value = "itemCustom") ItemCustom itemCustom) throws Exception {
 
 		//表单提交出错，重新回到表单。用户填写数据，将提交的参数在页面上回显。
 		model.addAttribute("id", id);
@@ -85,6 +84,18 @@ public class GoodController {
 
 		//转发
 //		return "forward:queryItem.action";
+	}
+
+	//删除 商品
+	@RequestMapping("/deleteItems")
+	public String deleteItems(Integer[] delete_id) throws Exception {
+
+		//调用service方法删除 商品
+		//....
+
+		itemService.deleteItems(delete_id);
+
+		return "success";
 	}
 
 	/**
@@ -100,6 +111,23 @@ public class GoodController {
 		//使用request转发页面，需要些完整路径
 		request.getRequestDispatcher("/WEB-INF/jsp/editItem.jsp").forward(request,response);
 	}*/
+
+
+	/**
+	 * 单独将商品类型的方法提出来，将方法返回值填充到request，在页面显示
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	@ModelAttribute("itemsType")
+	public Map<String, String> getItemsType() throws Exception {
+
+		HashMap<String, String> itemsType = new HashMap<String, String>();
+		itemsType.put("001", "数码");
+		itemsType.put("002", "服装");
+		return itemsType;
+
+	}
 
 	/**
 	 * spring mvc入门案例。自行封装数据

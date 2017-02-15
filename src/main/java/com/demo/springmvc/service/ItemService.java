@@ -25,5 +25,6 @@ public interface ItemService {
 	 */
 	void updateByPrimaryKeyWithBLOBs(Integer id, ItemCustom itemCustom) throws Exception;
 
+	int deleteItems(Integer[] delete_id) throws Exception;
 
 }
