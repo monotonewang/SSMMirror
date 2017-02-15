@@ -31,11 +31,56 @@
     <!--注解Controller-->
     <context:component-scan base-package="com.demo.springmvc.controller"/>
 
+    <!--处理器映射器-->
     <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>-->
 
     <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>-->
 
     <!--下面的可以替代处理器映射器和处理器适配器-->
-    <mvc:annotation-driven/>
+    <!--<mvc:annotation-driven/>-->
+
+    <!--自定义绑定,使用属性编辑器-老方法-->
+    <!--注册属性编辑器-->
+    <!--<bean id="customPropertyEditor" class="com.demo.springmvc.controller.propertyeditor.CustomPropertyEditor"/>-->
+
+    <!-- 自定义webBinder -->
+    <!--<bean id="customBinder" class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">-->
+        <!-- 使用converter进行参数转 -->
+        <!--<property name="conversionService" ref="conversionService" />-->
+
+        <!-- propertyEditorRegistrars用于属性编辑器 -->
+        <!--<property name="propertyEditorRegistrars">-->
+            <!--<list>-->
+                <!--<ref bean="customPropertyEditor"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--处理器映射器-->
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>-->
+
+    <!-- 处理器适配器-注解适配器 -->
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
+        <!-- 在webBindingInitializer中注入自定义属性编辑器、自定义转换器 -->
+        <!--<property name="webBindingInitializer" ref="customBinder"/>-->
+    <!--</bean>-->
+
+
+    <!--自定义参数绑定使用转化器-->
+    <!--方法一:不适用   mvc-annotation-driven-->
+    <!--注册使用转化器-->
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <list>
+                <bean class="com.demo.springmvc.controller.converter.CustomDateConverter"/>
+                <bean class="com.demo.springmvc.controller.converter.StringTrimConverter"/>
+            </list>
+        </property>
+    </bean>
+
+    <!--方法二：使用   mvc-annotation-driven-->
+    <!-- 通过annotation-driven可以替代下边的处理器映射器和适配器 -->
+    <mvc:annotation-driven conversion-service="conversionService"/>
 
 </beans>

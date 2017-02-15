@@ -4,17 +4,13 @@ import com.demo.springmvc.po.ItemCustom;
 import com.demo.springmvc.po.Items;
 import com.demo.springmvc.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -139,12 +135,13 @@ public class GoodController {
 		return modelAndView;
 	}
 
+//	这种方式无法实现多个Controller共用
 	//自定义属性编辑器
-	@InitBinder
-	public void initBinder(WebDataBinder binder) throws Exception {
-		// Date.class必须是与controler方法形参pojo属性一致的date类型，这里是java.util.Date
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(
-				new SimpleDateFormat("yyyy-MM-dd HH-mm-ss"), true));
-	}
+//	@InitBinder
+//	public void initBinder(WebDataBinder binder) throws Exception {
+//		// Date.class必须是与controler方法形参pojo属性一致的date类型，这里是java.util.Date
+//		binder.registerCustomEditor(Date.class, new CustomDateEditor(
+//				new SimpleDateFormat("yyyy-MM-dd HH-mm-ss"), true));
+//	}
 
 }
