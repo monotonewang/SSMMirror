@@ -6,9 +6,6 @@ import java.lang.reflect.Proxy;
 
 /**
  * JDK的动态代理的机制
- * 
- * @author 姜涛
- * 
  */
 public class JDKProxy implements InvocationHandler{
 	private UserDao userDao;

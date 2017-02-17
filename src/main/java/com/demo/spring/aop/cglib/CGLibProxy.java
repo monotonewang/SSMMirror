@@ -8,8 +8,6 @@ import java.lang.reflect.Method;
 
 /**
  * 使用CGLib生成代理对象
- * @author 姜涛
- *
  */
 public class CGLibProxy implements MethodInterceptor{
 	private ProductDao productDao;
