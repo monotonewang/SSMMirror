@@ -7,18 +7,36 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>查询商品列表</title>
+    <script type="text/javascript" >
+        function deleteItems() {
+            //将form的action指向删除商品的地址
+            document.itemForms.action="${pageContext.request.contextPath}/item/editItemsListSubmit.action";
+            document.itemForms.submit();
+        }
+    </script>
 </head>
 <body>
-<form action="${pageContext.request.contextPath }/item/queryItem.action" method="post">
+<form name="itemForms" action="${pageContext.request.contextPath }/item/queryItem.action" method="post">
     查询条件：
     <table width="100%" border=1>
         <tr>
-            <td><input type="submit" value="查询"/></td>
+            <td><input type="submit" value="查询"/>
+            <input type="button" value="删除" onclick="deleteItems()"/></td>
+            <td>
+                <select>
+                    <%--通过el取地址符--%>
+                    <c:forEach items="${itemsType}" var="item">
+                        <option value="${item.key}">${item.value}</option>
+                    </c:forEach>
+                </select>
+            </td>
+
         </tr>
     </table>
     商品列表：
     <table width="100%" border=1>
         <tr>
+            <td>选择</td>
             <td>商品名称</td>
             <td>商品价格</td>
             <td>生产日期</td>
@@ -27,6 +45,8 @@
         </tr>
         <c:forEach items="${itemsList }" var="item">
             <tr>
+
+                <td><input type="checkbox" name="delete_id" value="${item.id}"></td>
                 <td>${item.id }</td>
                 <td>${item.name }</td>
                 <td>${item.price }</td>
