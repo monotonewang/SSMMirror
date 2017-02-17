@@ -79,9 +79,10 @@ public class GoodController {
 
 		//调用service更新商品信息
 		itemService.updateByPrimaryKeyWithBLOBs(id, itemCustom);
+		//测试数据回显
+		return "editItem";
 		//重定向。
-		return "redirect:queryItem.action";
-
+//		return "redirect:queryItem.action";
 		//转发
 //		return "forward:queryItem.action";
 	}
