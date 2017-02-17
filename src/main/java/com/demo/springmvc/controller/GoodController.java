@@ -65,8 +65,12 @@ public class GoodController {
     //批量修改商品提交
     @RequestMapping(value = "/editItemsListSubmit", method = {RequestMethod.POST, RequestMethod.GET})
     public String editItemsListSubmit(ItemQueryVo itemQueryVo) throws Exception {
-        System.out.println(itemQueryVo);
 
+        List<ItemCustom> itemsList = itemQueryVo.getItemsList();
+        for(int i=0;i<itemsList.size();i++){
+            ItemCustom itemCustom = itemsList.get(i);
+            System.out.println(itemCustom);
+        }
 
         return "success";
     }
