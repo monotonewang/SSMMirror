@@ -10,9 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.*;
 
 /**
@@ -83,14 +85,14 @@ public class GoodController {
      * @throws Exception
      */
     @RequestMapping(value = "/editItem", method = {RequestMethod.GET})
-    public String editItems(Model model, HttpServletRequest request, Integer id) throws Exception {
+    public String editItems(Model model, Integer id) throws Exception {
         //通过request-获取商品id;
 //		String idx = request.getParameter("id");
 //		Integer integer = Integer.valueOf(idx);
         //简单数据回显
         model.addAttribute("id", id);
         ItemCustom itemList = itemService.findItemsById(id);
-        model.addAttribute("item", itemList);
+        model.addAttribute("itemCustom", itemList);
         return "editItem";
     }
 
@@ -101,18 +103,37 @@ public class GoodController {
 //			ItemsQueryVo itemsQueryVo)throws Exception{
     //简单的pojo数据，放到model中。需要其中value和jsp中的一致。
     //注意（ItemCustom item）形参和jsp中一致，不需要addAttribute，但是不推荐使用。
-    @RequestMapping(value = "/editItemSubmit", method = {RequestMethod.POST})
-    public String editItemSubmit(Model model, Integer id, @ModelAttribute(value = "item") ItemCustom itemCustom) throws Exception {
+//    pictureFile 上传图片
+    @RequestMapping(value = "/editItemSubmit")
+    public String editItemSubmit(Model model, Integer id, @ModelAttribute(value = "itemCustom") ItemCustom itemCustom, @RequestParam("pictureFile") MultipartFile pictureFile) throws Exception {
 
         //表单提交出错，重新回到表单。用户填写数据，将提交的参数在页面上回显。
         model.addAttribute("id", id);
 
+        //上传图片
+         if(pictureFile!=null){
+             System.out.println("file is not null");
+             //图片上传成功，将图片地址写入数据库
+             String filePath="C:\\upload\\pic\\";
+             //获取图片的原始名称
+             String originalFilename = pictureFile.getOriginalFilename();
+             //生成新的文件名称
+             String newFileName=UUID.randomUUID()+originalFilename.substring(originalFilename.lastIndexOf("."));
+             //新文件
+             File file=new File(filePath+newFileName);
+             //将内存中的文件写入磁盘
+             pictureFile.transferTo(file);
+             //将新图片的地址写入数据库
+             itemCustom.setPic(newFileName);
+
+         }
+
         //调用service更新商品信息
         itemService.updateByPrimaryKeyWithBLOBs(id, itemCustom);
         //测试数据回显
-        return "editItem";
+//        return "editItem";
         //重定向。
-//		return "redirect:queryItem.action";
+		return "redirect:queryItem.action";
         //转发
 //		return "forward:queryItem.action";
     }

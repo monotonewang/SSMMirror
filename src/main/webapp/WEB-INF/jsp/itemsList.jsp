@@ -50,6 +50,7 @@
                 <td>${item.id }</td>
                 <td>${item.name }</td>
                 <td>${item.price }</td>
+                <td>${item.pic }</td>
                 <td><fmt:formatDate value="${item.createtime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                 <td>${item.detail }</td>
 
