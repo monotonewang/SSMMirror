@@ -7,6 +7,9 @@ import com.demo.springmvc.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -104,14 +107,27 @@ public class GoodController {
     //简单的pojo数据，放到model中。需要其中value和jsp中的一致。
     //注意（ItemCustom item）形参和jsp中一致，不需要addAttribute，但是不推荐使用。
 //    pictureFile 上传图片
+    //校验前面加注解，后面带上错误
     @RequestMapping(value = "/editItemSubmit")
-    public String editItemSubmit(Model model, Integer id, @ModelAttribute(value = "itemCustom") ItemCustom itemCustom, @RequestParam("pictureFile") MultipartFile pictureFile) throws Exception {
+    public String editItemSubmit(Model model, Integer id, @Validated @ModelAttribute(value = "itemCustom") ItemCustom itemCustom, BindingResult bindingResult, @RequestParam("pictureFile") MultipartFile pictureFile) throws Exception {
+
+        if(bindingResult.hasErrors()){
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+
+            model.addAttribute("errors",allErrors);
+            for ( ObjectError error:allErrors){
+                //输出错误信息
+                System.out.println(error.getDefaultMessage());
+            }
+            //如果校验错误，回到商品修改页面
+            return "editItem";
+        }
 
         //表单提交出错，重新回到表单。用户填写数据，将提交的参数在页面上回显。
         model.addAttribute("id", id);
 
         //上传图片
-         if(pictureFile!=null){
+         if(pictureFile!=null&& pictureFile.getOriginalFilename()!=null&&pictureFile.getOriginalFilename().length()>0){
              System.out.println("file is not null");
              //图片上传成功，将图片地址写入数据库
              String filePath="C:\\upload\\pic\\";

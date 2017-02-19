@@ -10,6 +10,11 @@
 
 </head>
 <body>
+<%--错误信息--%>
+<c:forEach items="${errors}" var="error">
+    ${error.defaultMessage}
+    <br/>
+</c:forEach>
 <%--enctype支持上传图片--%>
 <form id="itemForm" action="${pageContext.request.contextPath }/item/editItemSubmit.action" method="post" enctype="multipart/form-data" >
     <input type="text" name="id" value="${id }"/>
