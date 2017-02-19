@@ -1,5 +1,7 @@
 package com.demo.springmvc.po;
 
+import com.demo.springmvc.controller.validation.ValidGroup1;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -15,7 +17,8 @@ public class Items {
 
     private String pic;
 
-    @NotNull(message = "{items.createtime.is.notnull}")
+    //group可以指定校验分组，可以指定多个分组
+    @NotNull(message = "{items.createtime.is.notnull}",groups = {ValidGroup1.class})
     private Date createtime;
 
     private String detail;

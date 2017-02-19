@@ -1,5 +1,6 @@
 package com.demo.springmvc.controller;
 
+import com.demo.springmvc.controller.validation.ValidGroup1;
 import com.demo.springmvc.po.ItemCustom;
 import com.demo.springmvc.po.ItemQueryVo;
 import com.demo.springmvc.po.Items;
@@ -72,7 +73,7 @@ public class GoodController {
     public String editItemsListSubmit(ItemQueryVo itemQueryVo) throws Exception {
 
         List<ItemCustom> itemsList = itemQueryVo.getItemsList();
-        for(int i=0;i<itemsList.size();i++){
+        for (int i = 0; i < itemsList.size(); i++) {
             ItemCustom itemCustom = itemsList.get(i);
             System.out.println(itemCustom);
         }
@@ -108,14 +109,18 @@ public class GoodController {
     //注意（ItemCustom item）形参和jsp中一致，不需要addAttribute，但是不推荐使用。
 //    pictureFile 上传图片
     //校验前面加注解，后面带上错误
+    //@Validated定义属于某一个组的校验
     @RequestMapping(value = "/editItemSubmit")
-    public String editItemSubmit(Model model, Integer id, @Validated @ModelAttribute(value = "itemCustom") ItemCustom itemCustom, BindingResult bindingResult, @RequestParam("pictureFile") MultipartFile pictureFile) throws Exception {
-
-        if(bindingResult.hasErrors()){
+    public String editItemSubmit(Model model,
+                                 Integer id,
+                                 @Validated(value = {ValidGroup1.class}) @ModelAttribute(value = "itemCustom") ItemCustom itemCustom,
+                                 BindingResult bindingResult,
+                                 @RequestParam("pictureFile") MultipartFile pictureFile) throws Exception {
+        if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
 
-            model.addAttribute("errors",allErrors);
-            for ( ObjectError error:allErrors){
+            model.addAttribute("errors", allErrors);
+            for (ObjectError error : allErrors) {
                 //输出错误信息
                 System.out.println(error.getDefaultMessage());
             }
@@ -127,29 +132,29 @@ public class GoodController {
         model.addAttribute("id", id);
 
         //上传图片
-         if(pictureFile!=null&& pictureFile.getOriginalFilename()!=null&&pictureFile.getOriginalFilename().length()>0){
-             System.out.println("file is not null");
-             //图片上传成功，将图片地址写入数据库
-             String filePath="C:\\upload\\pic\\";
-             //获取图片的原始名称
-             String originalFilename = pictureFile.getOriginalFilename();
-             //生成新的文件名称
-             String newFileName=UUID.randomUUID()+originalFilename.substring(originalFilename.lastIndexOf("."));
-             //新文件
-             File file=new File(filePath+newFileName);
-             //将内存中的文件写入磁盘
-             pictureFile.transferTo(file);
-             //将新图片的地址写入数据库
-             itemCustom.setPic(newFileName);
+        if (pictureFile != null && pictureFile.getOriginalFilename() != null && pictureFile.getOriginalFilename().length() > 0) {
+            System.out.println("file is not null");
+            //图片上传成功，将图片地址写入数据库
+            String filePath = "C:\\upload\\pic\\";
+            //获取图片的原始名称
+            String originalFilename = pictureFile.getOriginalFilename();
+            //生成新的文件名称
+            String newFileName = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
+            //新文件
+            File file = new File(filePath + newFileName);
+            //将内存中的文件写入磁盘
+            pictureFile.transferTo(file);
+            //将新图片的地址写入数据库
+            itemCustom.setPic(newFileName);
 
-         }
+        }
 
         //调用service更新商品信息
         itemService.updateByPrimaryKeyWithBLOBs(id, itemCustom);
         //测试数据回显
 //        return "editItem";
         //重定向。
-		return "redirect:queryItem.action";
+        return "redirect:queryItem.action";
         //转发
 //		return "forward:queryItem.action";
     }
