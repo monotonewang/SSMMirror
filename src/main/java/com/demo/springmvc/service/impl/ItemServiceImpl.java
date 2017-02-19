@@ -44,6 +44,7 @@ public class ItemServiceImpl implements ItemService {
 	 * @throws Exception
 	 */
 	public ItemCustom findItemsById(int id) throws Exception {
+
 		return itemsMapperCustom.selectByPrimaryKey(id);
 	}
 

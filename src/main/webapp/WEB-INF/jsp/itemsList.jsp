@@ -40,8 +40,10 @@
             <td>商品名称</td>
             <td>商品价格</td>
             <td>生产日期</td>
+            <td>商品图片</td>
             <td>商品描述</td>
             <td>操作</td>
+            <td>rest连接</td>
         </tr>
         <c:forEach items="${itemsList }" var="item">
             <tr>
@@ -55,6 +57,7 @@
                 <td>${item.detail }</td>
 
                 <td><a href="${pageContext.request.contextPath }/item/editItem.action?id=${item.id}">修改</a></td>
+                <td><a href="${pageContext.request.contextPath }/item/viewItems/${item.id}">商品查看</a></td>
 
             </tr>
         </c:forEach>

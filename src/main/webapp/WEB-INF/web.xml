@@ -1,4 +1,4 @@
-   <!DOCTYPE web-app PUBLIC
+<!DOCTYPE web-app PUBLIC
         "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
         "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
@@ -33,6 +33,24 @@
         <!--需要特殊处理对静态文件不能有springmvc-->
         <!--这里可以配置成*.do,*.action，所有由.do,*.action结尾的都由springmvc处理，这方法常用-->
         <url-pattern>*.action</url-pattern>
+    </servlet-mapping>
+
+    <!-- restful的配置 -->
+    <servlet>
+        <servlet-name>springmvc_rest</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!-- 加载springmvc配置 -->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <!-- 配置文件的地址 如果不配置contextConfigLocation， 默认查找的配置文件名称classpath下的：servlet名称+"-serlvet.xml"即：springmvc-serlvet.xml -->
+            <param-value>classpath:springmvc-servlet.xml</param-value>
+        </init-param>
+
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springmvc_rest</servlet-name>
+        <!-- rest方式配置为/++++><会导致无法访问静态资源 -->
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <!--spring mvc乱码问题解决-->

@@ -126,4 +126,12 @@
         <property name="cacheSeconds" value="120" />
     </bean>
 
+    <!--定义统一的异常处理器-->
+    <bean class="com.demo.springmvc.exception.CustomExceptionResolver"/>
+
+
+    <!--静态资源的解析-->
+    <mvc:resources mapping="/js/**" location="/js/"/>
+    <mvc:resources mapping="/img/**" location="/img/"/>
+
 </beans>

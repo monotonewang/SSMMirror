@@ -1,6 +1,7 @@
 package com.demo.springmvc.controller;
 
 import com.demo.springmvc.controller.validation.ValidGroup1;
+import com.demo.springmvc.exception.CustomException;
 import com.demo.springmvc.po.ItemCustom;
 import com.demo.springmvc.po.ItemQueryVo;
 import com.demo.springmvc.po.Items;
@@ -11,10 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -90,15 +88,37 @@ public class GoodController {
      */
     @RequestMapping(value = "/editItem", method = {RequestMethod.GET})
     public String editItems(Model model, Integer id) throws Exception {
+
+
         //通过request-获取商品id;
 //		String idx = request.getParameter("id");
 //		Integer integer = Integer.valueOf(idx);
         //简单数据回显
         model.addAttribute("id", id);
         ItemCustom itemList = itemService.findItemsById(id);
+
+//      未知异常处理
+//		int i=1/0;
+
+        //调试自定义异常
+        if (itemList == null) {
+            throw new CustomException("修改商品信息不存在");
+        }
         model.addAttribute("itemCustom", itemList);
         return "editItem";
     }
+
+    //根据商品id信息查看Restful接口
+    //@RequestMapping中指定restful方式的url中的参数，参数需要用{}包起来
+    //@PathVariable将url中的{}包起参数和形参进行绑定
+    @RequestMapping("/viewItems/{id}")
+    public @ResponseBody ItemCustom viewItems(@PathVariable("id") Integer id) throws Exception{
+        //调用 service查询商品信息
+        ItemCustom itemsCustom = itemService.findItemsById(id);
+
+        return itemsCustom;
+    }
+
 
     //商品修改提交
     //itemsQueryVo是包装类型的pojo
