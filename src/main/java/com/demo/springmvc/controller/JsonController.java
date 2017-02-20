@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by WangTest on 2017/2/19.
  */
 @Controller
-public class JsonTest {
+public class JsonController {
 
     //请求json相应json
     @RequestMapping("/requestJson")
