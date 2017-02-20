@@ -7,36 +7,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>查询商品列表</title>
-    <script type="text/javascript">
-        function deleteItems() {
-            //将form的action指向删除商品的地址
-            document.itemForms.action = "${pageContext.request.contextPath}/item/delItemsListSubmit.action";
-            document.itemForms.submit();
-        }
-        function addItems() {
-            //            测试查看contextPath的值
-            <%--${pageContext.request.contextPath} equals "/SSMMirror"--%>
-            var test = document.getElementById("test");
-            test.value = "${pageContext.request.contextPath}";
-
-            document.itemForms.action = "${pageContext.request.contextPath}/item/addItem.action";
-            document.itemForms.submit();
-//            window.location.href="addItem.jsp";
-        }
-
-        function selectAll(){
-            //1.得到id为main的这个checkbox
-          var checkbox=  document.getElementById("getAll");
-          var flag=checkbox.checked;
-            //2.得到所有name=ck的checkbox
-          var ck=document.getElementsByName("delete_id");
-
-          //3.将cks中所有的checkbox的checked值设置为flag
-          for(var i=0;i<ck.length;i++){
-              ck[i].checked=flag;
-          }
-        }
-    </script>
 </head>
 <body>
 <h1>Test Interceptor</h1>
@@ -98,5 +68,35 @@
     </table>
 </form>
 </body>
+<script type="text/javascript">
+    function deleteItems() {
+        //将form的action指向删除商品的地址
+        document.itemForms.action = "${pageContext.request.contextPath}/item/delItemsListSubmit.action";
+        document.itemForms.submit();
+//            $(":checkbox:checked").remove()
+    }
+    function addItems() {
+        //            测试查看contextPath的值
+        <%--${pageContext.request.contextPath} equals "/SSMMirror"--%>
+        var test = document.getElementById("test");
+        test.value = "${pageContext.request.contextPath}";
 
+        document.itemForms.action = "${pageContext.request.contextPath}/item/addItem.action";
+        document.itemForms.submit();
+//            window.location.href="addItem.jsp";
+    }
+
+    function selectAll(){
+        //1.得到id为main的这个checkbox
+        var checkbox=  document.getElementById("getAll");
+        var flag=checkbox.checked;
+        //2.得到所有name=ck的checkbox
+        var ck=document.getElementsByName("delete_id");
+
+        //3.将cks中所有的checkbox的checked值设置为flag
+        for(var i=0;i<ck.length;i++){
+            ck[i].checked=flag;
+        }
+    }
+</script>
 </html>
