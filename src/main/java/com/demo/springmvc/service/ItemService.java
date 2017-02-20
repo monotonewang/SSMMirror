@@ -27,4 +27,6 @@ public interface ItemService {
 
 	int deleteItems(Integer[] delete_id) throws Exception;
 
+	//插入操作
+	int insert( ItemCustom itemCustom ) throws Exception;
 }

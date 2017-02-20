@@ -89,6 +89,13 @@ public class ItemServiceImpl implements ItemService {
 		return 0;
 	}
 
+	public int insert(ItemCustom itemCustom) throws Exception {
+		Items item=new Items();
+		BeanUtils.copyProperties(item,itemCustom);
+        int res = itemsMapper.insert(item);
+        return res;
+	}
+
 	/**
 	 * 测试数据
 	 *

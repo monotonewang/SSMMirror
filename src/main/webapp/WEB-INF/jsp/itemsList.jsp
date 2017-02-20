@@ -13,6 +13,16 @@
             document.itemForms.action="${pageContext.request.contextPath}/item/editItemsListSubmit.action";
             document.itemForms.submit();
         }
+        function addItems() {
+            //            测试查看contextPath的值
+            <%--${pageContext.request.contextPath} equals "/SSMMirror"--%>
+            var test=document.getElementById("test");
+            test.value="${pageContext.request.contextPath}";
+
+            document.itemForms.action="${pageContext.request.contextPath}/item/addItem.action";
+            document.itemForms.submit();
+//            window.location.href="addItem.jsp";
+        }
     </script>
 </head>
 <body>
@@ -26,8 +36,10 @@
     查询条件：
     <table width="100%" border=1>
         <tr>
-            <td><input type="submit" value="查询"/>
-            <input type="button" value="删除" onclick="deleteItems()"/></td>
+            <td><input type="submit" value="查询"/></td>
+            <td><input type="button" value="删除" onclick="deleteItems()"/></td>
+            <td><input type="button" value="添加商品" onclick="addItems()"/></td>
+            <td><input type="text" id="test" value="test"/></td>
             <td>
                 <select>
                     <%--通过el取地址符--%>
@@ -49,6 +61,7 @@
             <td>商品图片</td>
             <td>商品描述</td>
             <td>操作</td>
+            <td>商品修改</td>
             <td>rest连接</td>
         </tr>
         <c:forEach items="${itemsList }" var="item">

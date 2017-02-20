@@ -10,17 +10,20 @@ public class Items {
 
     private Integer id;
 
-    @Size(min=1,max=30,message = "{items.name.length.error}")
+    @Size(min = 1, max = 30, message = "{items.name.length.error}")
     private String name;
 
+    @NotNull(message = "{items.price.is.notnull}")
     private Float price;
 
+    @NotNull(message = "{items.pic.is.notnull}")
     private String pic;
 
     //group可以指定校验分组，可以指定多个分组
-    @NotNull(message = "{items.createtime.is.notnull}",groups = {ValidGroup1.class})
+    @NotNull(message = "{items.createtime.is.notnull}", groups = {ValidGroup1.class})
     private Date createtime;
 
+    @NotNull(message = "{items.detail.is.notnull}")
     private String detail;
 
     public Integer getId() {

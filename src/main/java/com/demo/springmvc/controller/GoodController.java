@@ -17,9 +17,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
+ * 2017-2-20 11:32:34
+ * 商品查询添加查询条件：商品名称、价格范围
+ * 添加商品功能开发
+ * 删除商品功能开发
  * Created by 7 on 2017/2/9.
  */
 @Controller
@@ -32,6 +37,42 @@ public class GoodController {
     //下面是通过注解获取bean
     @Autowired
     private ItemService itemService;
+
+    //添加商品
+    @RequestMapping("/addItem")
+    public String addItem(Model model, ItemCustom itemCustom) throws Exception {
+        itemCustom = new ItemCustom();
+        Date date = new Date();
+        itemCustom.setCreatetime(date);
+        model.addAttribute("itemCustom", itemCustom);
+        return "addItem";
+    }
+
+    @RequestMapping("/addItemSubmit")
+    public String addItemSubmit(Model model, @Validated(value = {ValidGroup1.class}) ItemCustom itemCustom, @RequestParam("pictureFile") MultipartFile pictureFile) throws Exception {
+        //完成图片上次功能，设置图片属性
+        uploadPictureFile(itemCustom, pictureFile);
+        //执行插入数据库工作
+        int res = 0;
+        try {
+            System.out.println("before");
+            res = itemService.insert(itemCustom);
+            System.out.println("after");
+            if (res == 1) {
+                //添加成功，重定向到商品列表页
+                return "redirect:/item/queryItem.action";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            //添加失败，跳到添加标签
+            return "addItem";
+        } finally {
+
+        }
+        //添加失败，跳到添加标签
+        return "addItem";
+
+    }
 
     /**
      * 查看所有的商品列表
@@ -112,7 +153,9 @@ public class GoodController {
     //@RequestMapping中指定restful方式的url中的参数，参数需要用{}包起来
     //@PathVariable将url中的{}包起参数和形参进行绑定
     @RequestMapping("/viewItems/{id}")
-    public @ResponseBody ItemCustom viewItems(@PathVariable("id") Integer id) throws Exception{
+    public
+    @ResponseBody
+    ItemCustom viewItems(@PathVariable("id") Integer id) throws Exception {
         //调用 service查询商品信息
         ItemCustom itemsCustom = itemService.findItemsById(id);
 
@@ -150,7 +193,27 @@ public class GoodController {
 
         //表单提交出错，重新回到表单。用户填写数据，将提交的参数在页面上回显。
         model.addAttribute("id", id);
+        uploadPictureFile(itemCustom, pictureFile);
 
+
+        //调用service更新商品信息
+        itemService.updateByPrimaryKeyWithBLOBs(id, itemCustom);
+        //测试数据回显
+//        return "editItem";
+        //重定向。
+        return "redirect:queryItem.action";
+        //转发
+//		return "forward:queryItem.action";
+    }
+
+    /**
+     * 上传图片功能
+     *
+     * @param itemCustom
+     * @param pictureFile
+     * @throws IOException
+     */
+    private void uploadPictureFile(@Validated(value = {ValidGroup1.class}) @ModelAttribute(value = "itemCustom") ItemCustom itemCustom, @RequestParam("pictureFile") MultipartFile pictureFile) throws IOException {
         //上传图片
         if (pictureFile != null && pictureFile.getOriginalFilename() != null && pictureFile.getOriginalFilename().length() > 0) {
             System.out.println("file is not null");
@@ -168,15 +231,6 @@ public class GoodController {
             itemCustom.setPic(newFileName);
 
         }
-
-        //调用service更新商品信息
-        itemService.updateByPrimaryKeyWithBLOBs(id, itemCustom);
-        //测试数据回显
-//        return "editItem";
-        //重定向。
-        return "redirect:queryItem.action";
-        //转发
-//		return "forward:queryItem.action";
     }
 
     //删除 商品(绑定数组)
