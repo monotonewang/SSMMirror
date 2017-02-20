@@ -244,7 +244,7 @@
             <version>1.9.13</version>
         </dependency>
 
-        <!--引入spring4新版本问题-->
+        <!--json 引入spring4新版本问题-->
         <!--http://blog.csdn.net/you23hai45/article/details/50513460-->
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>
