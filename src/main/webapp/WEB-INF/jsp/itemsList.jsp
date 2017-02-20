@@ -7,21 +7,34 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>查询商品列表</title>
-    <script type="text/javascript" >
+    <script type="text/javascript">
         function deleteItems() {
             //将form的action指向删除商品的地址
-            document.itemForms.action="${pageContext.request.contextPath}/item/editItemsListSubmit.action";
+            document.itemForms.action = "${pageContext.request.contextPath}/item/delItemsListSubmit.action";
             document.itemForms.submit();
         }
         function addItems() {
             //            测试查看contextPath的值
             <%--${pageContext.request.contextPath} equals "/SSMMirror"--%>
-            var test=document.getElementById("test");
-            test.value="${pageContext.request.contextPath}";
+            var test = document.getElementById("test");
+            test.value = "${pageContext.request.contextPath}";
 
-            document.itemForms.action="${pageContext.request.contextPath}/item/addItem.action";
+            document.itemForms.action = "${pageContext.request.contextPath}/item/addItem.action";
             document.itemForms.submit();
 //            window.location.href="addItem.jsp";
+        }
+
+        function selectAll(){
+            //1.得到id为main的这个checkbox
+          var checkbox=  document.getElementById("getAll");
+          var flag=checkbox.checked;
+            //2.得到所有name=ck的checkbox
+          var ck=document.getElementsByName("delete_id");
+
+          //3.将cks中所有的checkbox的checked值设置为flag
+          for(var i=0;i<ck.length;i++){
+              ck[i].checked=flag;
+          }
         }
     </script>
 </head>
@@ -51,7 +64,8 @@
 
         </tr>
     </table>
-    商品列表：
+    商品列表：<br/>
+    全选：<input type="checkbox" id="getAll" onclick="selectAll()" />
     <table width="100%" border=1>
         <tr>
             <td>选择</td>

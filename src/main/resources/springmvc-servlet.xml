@@ -124,7 +124,7 @@
     </bean>
 
     <!--定义统一的异常处理器-->
-    <bean class="com.demo.springmvc.exception.CustomExceptionResolver"/>
+    <!--<bean class="com.demo.springmvc.exception.CustomExceptionResolver"/>-->
 
 
     <!--静态资源的解析-->

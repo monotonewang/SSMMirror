@@ -38,42 +38,6 @@ public class GoodController {
     @Autowired
     private ItemService itemService;
 
-    //添加商品
-    @RequestMapping("/addItem")
-    public String addItem(Model model, ItemCustom itemCustom) throws Exception {
-        itemCustom = new ItemCustom();
-        Date date = new Date();
-        itemCustom.setCreatetime(date);
-        model.addAttribute("itemCustom", itemCustom);
-        return "addItem";
-    }
-
-    @RequestMapping("/addItemSubmit")
-    public String addItemSubmit(Model model, @Validated(value = {ValidGroup1.class}) ItemCustom itemCustom, @RequestParam("pictureFile") MultipartFile pictureFile) throws Exception {
-        //完成图片上次功能，设置图片属性
-        uploadPictureFile(itemCustom, pictureFile);
-        //执行插入数据库工作
-        int res = 0;
-        try {
-            System.out.println("before");
-            res = itemService.insert(itemCustom);
-            System.out.println("after");
-            if (res == 1) {
-                //添加成功，重定向到商品列表页
-                return "redirect:/item/queryItem.action";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            //添加失败，跳到添加标签
-            return "addItem";
-        } finally {
-
-        }
-        //添加失败，跳到添加标签
-        return "addItem";
-
-    }
-
     /**
      * 查看所有的商品列表
      *
@@ -111,15 +75,14 @@ public class GoodController {
     @RequestMapping(value = "/editItemsListSubmit", method = {RequestMethod.POST, RequestMethod.GET})
     public String editItemsListSubmit(ItemQueryVo itemQueryVo) throws Exception {
 
-        List<ItemCustom> itemsList = itemQueryVo.getItemsList();
-        for (int i = 0; i < itemsList.size(); i++) {
-            ItemCustom itemCustom = itemsList.get(i);
-            System.out.println(itemCustom);
-        }
-
         return "success";
     }
 
+    @RequestMapping(value = "/delItemsListSubmit", method = {RequestMethod.POST, RequestMethod.GET})
+    public String delItemsListSubmit(ItemQueryVo itemQueryVo) throws Exception {
+
+        return "success";
+    }
     /**
      * Controller返回值-为String/修改单个sql
      *
@@ -327,5 +290,41 @@ public class GoodController {
 //		binder.registerCustomEditor(Date.class, new CustomDateEditor(
 //				new SimpleDateFormat("yyyy-MM-dd HH-mm-ss"), true));
 //	}
+
+    //添加商品-2017-2-20 15:22:30
+    @RequestMapping("/addItem")
+    public String addItem(Model model, ItemCustom itemCustom) throws Exception {
+        itemCustom = new ItemCustom();
+        Date date = new Date();
+        itemCustom.setCreatetime(date);
+        model.addAttribute("itemCustom", itemCustom);
+        return "addItem";
+    }
+
+    //添加商品提交-2017-2-20 15:22:41
+    @RequestMapping("/addItemSubmit")
+    public String addItemSubmit(Model model, @Validated(value = {ValidGroup1.class}) ItemCustom itemCustom, @RequestParam("pictureFile") MultipartFile pictureFile) throws Exception {
+        //完成图片上次功能，设置图片属性
+        uploadPictureFile(itemCustom, pictureFile);
+        //执行插入数据库工作
+        int res = 0;
+        try {
+            System.out.println("before");
+            res = itemService.insert(itemCustom);
+            System.out.println("after");
+            if (res == 1) {
+                //添加成功，重定向到商品列表页
+                return "redirect:/item/queryItem.action";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            //添加失败，跳到添加标签
+            return "addItem";
+        } finally {
+
+        }
+        //添加失败，跳到添加标签
+        return "addItem";
+    }
 
 }
