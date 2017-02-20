@@ -20,7 +20,7 @@
     <table width="100%" border=1>
         <tr>
             <td><input type="submit" value="查询"/></td>
-            <td><input type="button" value="删除" onclick="deleteItems()"/></td>
+
             <td><input type="button" value="添加商品" onclick="addItems()"/></td>
             <td><input type="text" id="test" value="test"/></td>
             <td>
@@ -31,11 +31,10 @@
                     </c:forEach>
                 </select>
             </td>
-
         </tr>
     </table>
     商品列表：<br/>
-    全选：<input type="checkbox" id="getAll" onclick="selectAll()" />
+    全选：<input type="checkbox" id="getAll" onclick="selectAll()"/>
     <table width="100%" border=1>
         <tr>
             <td>选择</td>
@@ -48,20 +47,20 @@
             <td>商品修改</td>
             <td>rest连接</td>
         </tr>
-        <c:forEach items="${itemsList }" var="item">
+        <c:forEach items="${itemsList }" var="itemsCustom">
             <tr>
-
-                <td><input type="checkbox" name="delete_id" value="${item.id}"></td>
-                <td>${item.id }</td>
-                <td>${item.name }</td>
-                <td>${item.price }</td>
-                <td>${item.pic }</td>
-                <td><fmt:formatDate value="${item.createtime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                <td>${item.detail }</td>
-
-                <td><a href="${pageContext.request.contextPath }/item/editItem.action?id=${item.id}">修改</a></td>
-                <td><a href="${pageContext.request.contextPath }/item/viewItems/${item.id}">商品查看</a></td>
-
+                <td><input type="checkbox" name="delete_id" value="${itemsCustom.id}"></td>
+                <td>${itemsCustom.id }</td>
+                <td>${itemsCustom.name }</td>
+                <td>${itemsCustom.price }</td>
+                <td>${itemsCustom.pic }</td>
+                <td><fmt:formatDate value="${itemsCustom.createtime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                <td>${itemsCustom.detail }</td>
+                <td><a href="${pageContext.request.contextPath }/item/editItem.action?id=${itemsCustom.id}">修改</a></td>
+                <td><a href="${pageContext.request.contextPath }/item/viewItems/${itemsCustom.id}">商品查看</a></td>
+                <td><a href="${pageContext.request.contextPath }/item/delItemsListSubmit.action?id=${itemsCustom.id}">删除带id</a>
+                </td>
+                <td><input type="button" value="删除" onclick="deleteItems()"/></td>
             </tr>
         </c:forEach>
 
@@ -69,34 +68,80 @@
 </form>
 </body>
 <script type="text/javascript">
+
     function deleteItems() {
-        //将form的action指向删除商品的地址
-        document.itemForms.action = "${pageContext.request.contextPath}/item/delItemsListSubmit.action";
-        document.itemForms.submit();
-//            $(":checkbox:checked").remove()
+        //获取所有选中的checkbox
+        var ck = document.getElementsByName("delete_id");
+        for (var i = 0; i < ck.length; i++) {
+            if (ck[i].checked) {
+
+            } else {
+                <%--${itemsList}.removeIndex(j);--%>
+            }
+        }
+        var itemsList = new Array();
+        itemsList.push("1");
+        itemsList.push("2");
+        itemsList.push("3");
+        itemsList.push("4");
+
+        $.ajax({
+            url: "${pageContext.request.contextPath }/item/delItemsListSubmit.action",
+            type: "post",
+            contentType: "application/json;charset=utf-8",
+            //请求key/value数据
+
+             data:{"itemsList":${itemsList}
+
+        }
+    ,
+        success:function (data) {
+
+//                alert(data.name);
+        }
+    })
+        ;
+
+        <%--document.itemForms.action = "${pageContext.request.contextPath}/item/delItemsListSubmit.action";--%>
+        <%--document.itemForms.submit();--%>
     }
+
     function addItems() {
         //            测试查看contextPath的值
         <%--${pageContext.request.contextPath} equals "/SSMMirror"--%>
-        var test = document.getElementById("test");
-        test.value = "${pageContext.request.contextPath}";
+        <%--var test = document.getElementById("test");--%>
+        <%--test.value = "${pageContext.request.contextPath}";--%>
 
         document.itemForms.action = "${pageContext.request.contextPath}/item/addItem.action";
         document.itemForms.submit();
 //            window.location.href="addItem.jsp";
     }
 
-    function selectAll(){
+    function selectAll() {
         //1.得到id为main的这个checkbox
-        var checkbox=  document.getElementById("getAll");
-        var flag=checkbox.checked;
+        var checkbox = document.getElementById("getAll");
+        var flag = checkbox.checked;
         //2.得到所有name=ck的checkbox
-        var ck=document.getElementsByName("delete_id");
+        var ck = document.getElementsByName("delete_id");
 
         //3.将cks中所有的checkbox的checked值设置为flag
-        for(var i=0;i<ck.length;i++){
-            ck[i].checked=flag;
+        for (var i = 0; i < ck.length; i++) {
+            ck[i].checked = flag;
         }
     }
+
+    //    var list = new Array();
+    //
+    //    /**
+    //     * 移除此列表中指定位置上的元素。
+    //     * @param index 指定位置
+    //     * @return 此位置的元素
+    //     */
+    //    function removeIndex(index) {
+    //        var object = this.list[index];
+    //        this.list.splice(index, 1);
+    //        return object;
+    //    }
+
 </script>
 </html>

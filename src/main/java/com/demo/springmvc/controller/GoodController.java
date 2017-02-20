@@ -48,9 +48,9 @@ public class GoodController {
     public ModelAndView queryItem() throws Exception {
 
 //		//调用service查询商品列表
-        List<ItemCustom> itemList = itemService.findItemsList();
+        List<ItemCustom> itemsList = itemService.findItemsList();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("itemsList", itemList);
+        modelAndView.addObject("itemsList", itemsList);
 //		System.out.println("xxx"+itemList);
         // 指定逻辑视图名
         modelAndView.setViewName("itemsList");
@@ -73,16 +73,24 @@ public class GoodController {
 
     //批量修改商品提交
     @RequestMapping(value = "/editItemsListSubmit", method = {RequestMethod.POST, RequestMethod.GET})
-    public String editItemsListSubmit(ItemQueryVo itemQueryVo) throws Exception {
-
+    public String editItemsListSubmit(ItemQueryVo itemsList) throws Exception {
+        System.out.println("vo" + itemsList);
+        System.out.println("list" + itemsList.getItemsList());
         return "success";
     }
 
+
+    //批量删除商品提交
     @RequestMapping(value = "/delItemsListSubmit", method = {RequestMethod.POST, RequestMethod.GET})
-    public String delItemsListSubmit(ItemQueryVo itemQueryVo) throws Exception {
-
+//    public  ItemCustom requestJson( ItemCustom itemCustom){
+//        @ResponseBody
+    public String delItemsListSubmit(@RequestBody String itemsList, Integer id) throws Exception {
+        System.out.println("vo" + itemsList + "id=" + id);
+//        System.out.println("list" + itemsList.getItemsList());
         return "success";
     }
+
+
     /**
      * Controller返回值-为String/修改单个sql
      *
