@@ -34,11 +34,11 @@
             <td>${users.id }</td>
             <td>${users.username }</td>
             <td>${users.pic }</td>
-
-            <td><fmt:formatDate value="${users.birthday}" pattern="yyyy-MM-dd "/></td>
-            <%--<td><fmt:formatDate value="${users.birthday}" pattern="yyyy-MM-dd HH:mm:ss"/></td>--%>
-
-            <td>${users.sex }</td>
+            <td><fmt:formatDate value="${users.birthday}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+            <td>
+                <c:if test="${users.sex=='1'}">男</c:if>
+                <c:if test="${users.sex=='0'}">女</c:if>
+            </td>
             <td>${users.address }</td>
         </tr>
     </c:forEach>

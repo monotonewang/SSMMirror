@@ -20,7 +20,6 @@ public class StringTrimConverter implements Converter<String, String> {
 					return null;
 				}
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
