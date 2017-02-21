@@ -7,4 +7,5 @@ package com.demo.springmvc.po;
 public class ItemCustom extends Items{
 
 
+
 }

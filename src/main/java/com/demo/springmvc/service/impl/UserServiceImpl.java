@@ -1,7 +1,6 @@
 package com.demo.springmvc.service.impl;
 
 import com.demo.springmvc.mapper.UserMapper;
-import com.demo.springmvc.mapper.UserMapperCustom;
 import com.demo.springmvc.po.User;
 import com.demo.springmvc.po.UserExample;
 import com.demo.springmvc.service.UserService;
@@ -16,8 +15,6 @@ import java.util.List;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserMapperCustom userMapperCustom;
 
     @Autowired
     private UserMapper userMapper;

@@ -7,6 +7,8 @@ public class User {
 
     private String username;
 
+    private String pic;
+
     private Date birthday;
 
     private String sex;
@@ -27,6 +29,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic == null ? null : pic.trim();
     }
 
     public Date getBirthday() {

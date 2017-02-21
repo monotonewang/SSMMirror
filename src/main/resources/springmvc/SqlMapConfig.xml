@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
     <!--启用分页查询插件-->
     <plugins>
         <!--PageHelper所在包名-->
@@ -13,7 +12,9 @@
             <!-- 该参数默认为false -->
             <!-- 设置为true时，会将RowBounds第一个参数offset当成pageNum页码使用 -->
             <!-- 和startPage中的pageNum效果一样-->
-            <property name="offsetAsPageNum" value="true"/>
+
+            <!--<property name="offsetAsPageNum" value="true"/>-->
+
             <!-- 该参数默认为false -->
             <!-- 设置为true时，使用RowBounds分页会进行count查询 -->
             <property name="rowBoundsWithCount" value="true"/>
@@ -25,7 +26,9 @@
             <!-- 3.3.0版本可用 - 分页参数合理化，默认false禁用 -->
             <!-- 启用合理化时，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页 -->
             <!-- 禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据 -->
-            <property name="reasonable" value="true"/>
+
+            <!--<property name="reasonable" value="true"/>-->
+
             <!-- 3.5.0版本可用 - 为了支持startPage(Object params)方法 -->
             <!-- 增加了一个`params`参数来配置参数映射，用于从Map或ServletRequest中取值 -->
             <!-- 可以配置pageNum,pageSize,count,pageSizeZero,reasonable,不配置映射的用默认值 -->
@@ -34,10 +37,9 @@
         </plugin>
     </plugins>
     <!--读取外部的properties文件，-->
-<mappers>
-    <mapper resource="springmvc/ItemsMapperCustom.xml"/>
-    <mapper resource="springmvc/ItemsMapper.xml"/>
-    <mapper resource="springmvc/UserMapper.xml"/>
-    <mapper resource="springmvc/UserMapperCustom.xml"/>
-</mappers>
+    <mappers>
+        <mapper resource="springmvc/ItemsMapperCustom.xml"/>
+        <mapper resource="springmvc/ItemsMapper.xml"/>
+        <mapper resource="springmvc/UserMapper.xml"/>
+    </mappers>
 </configuration>

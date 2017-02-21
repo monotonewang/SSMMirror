@@ -1,4 +1,4 @@
-    package com.demo.springmvc.mapper;
+package com.demo.springmvc.mapper;
 
 import com.demo.springmvc.po.User;
 import com.demo.springmvc.po.UserExample;

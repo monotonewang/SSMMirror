@@ -51,7 +51,7 @@ public class GoodController {
         List<ItemCustom> itemsList = itemService.findItemsList();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("itemsList", itemsList);
-//		System.out.println("xxx"+itemList);
+		System.out.println("xxx"+itemsList);
         // 指定逻辑视图名
         modelAndView.setViewName("itemsList");
         return modelAndView;
@@ -334,5 +334,6 @@ public class GoodController {
         //添加失败，跳到添加标签
         return "addItem";
     }
+
 
 }

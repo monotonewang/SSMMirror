@@ -1,9 +1,9 @@
 package com.demo.springmvc.service;
 
-        import com.demo.springmvc.po.User;
-        import com.demo.springmvc.po.UserExample;
+import com.demo.springmvc.po.User;
+import com.demo.springmvc.po.UserExample;
 
-        import java.util.List;
+import java.util.List;
 
 /**
  * Created by dell on 2017/2/21.
