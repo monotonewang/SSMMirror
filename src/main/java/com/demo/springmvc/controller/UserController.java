@@ -26,7 +26,8 @@ public class UserController {
         List<User> usersList = userService.selectByExample(new UserExample());
         System.out.println(usersList);
         model.addAttribute("usersList", usersList);
-        return "/user/usersList";
+//        return "/user/usersList";
+        return "/user/testDate";
     }
 
 

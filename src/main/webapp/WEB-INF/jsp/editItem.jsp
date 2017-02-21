@@ -31,7 +31,10 @@
         </tr>
         <tr>
             <td>商品生产日期</td>
-            <td><input type="text" name="createtime" value="<fmt:formatDate value="${itemCustom.createtime}" pattern="yyyy-MM-dd HH-mm-ss"/>"/></td>
+
+            <td><input type="text" name="createtime" class="sang_Calender" value="<fmt:formatDate value="${itemCustom.createtime}" pattern="yyyy-MM-dd HH-mm-ss" />"/></td>
+
+            <td><input type="text"  class="sang_Calender" /></td>
         </tr>
         <tr>
             <td>商品图片</td>
@@ -57,5 +60,5 @@
 
 </form>
 </body>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/nativeDate/datetime.js"></script>
 </html>

@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%--
   Created by IntelliJ IDEA.
   User: dell
@@ -15,7 +16,7 @@
   attribute value does not accept any expressions,
   可能是因为使用了JSP2.0版本, 同时又没有使用JSTL core库的备用版本(RT库)。--%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>userList</title>
 </head>
@@ -42,7 +43,10 @@
             <td>${users.address }</td>
         </tr>
     </c:forEach>
-
+        <input type="text" class="sang_Calender"/>
 </table>
+
+<script type="text/javascript" src="datetime.js"></script>
+
 </body>
 </html>
