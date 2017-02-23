@@ -6,7 +6,7 @@
   Time: 10:50
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"  isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%--http://blog.csdn.net/lzblog/article/details/22076893--%>
@@ -16,6 +16,7 @@
   attribute value does not accept any expressions,
   可能是因为使用了JSP2.0版本, 同时又没有使用JSTL core库的备用版本(RT库)。--%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%--<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>--%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>userList</title>
