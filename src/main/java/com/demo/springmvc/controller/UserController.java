@@ -25,9 +25,12 @@ public class UserController {
     public String queryUser(Model model) {
         List<User> usersList = userService.selectByExample(new UserExample());
         System.out.println(usersList);
+        for (int i = 0; i < usersList.size(); i++) {
+            System.out.println(usersList.get(i).getBirthday().toString());
+        }
         model.addAttribute("usersList", usersList);
-//        return "/user/usersList";
-        return "/user/testDate";
+        return "/user/usersList";
+//        return "/user/testDate";
     }
 
 
