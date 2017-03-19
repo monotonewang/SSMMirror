@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
- *
+ * 查询用户信息列表
  * Created by dell on 2017/2/21.
  */
 @Controller
