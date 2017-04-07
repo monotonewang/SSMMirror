@@ -1,6 +1,7 @@
 package com.demo.fukiapi.home.controller;
 
 import com.demo.fukiapi.home.po.HomeNew;
+import com.demo.fukiapi.home.po.HomeNewCustom;
 import com.demo.fukiapi.home.po.HomeNewExample;
 import com.demo.fukiapi.home.service.HomeNewService;
 import com.demo.springmvc.po.ItemCustom;
@@ -32,13 +33,15 @@ public class HomeNewController {
      */
     @RequestMapping(value = "/queryNew", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
-    public List<HomeNew> queryNew() throws Exception {
+    public HomeNewCustom queryNew() throws Exception {
 
 //		//调用service查询商品列表
         List<HomeNew> itemsList = homeNewService.selectByExample(new HomeNewExample());
-
-
-        return itemsList;
+        HomeNewCustom homeNewCustom=new HomeNewCustom();
+        homeNewCustom.setHomeNewList(itemsList);
+        homeNewCustom.setResultCode("200");
+        homeNewCustom.setReseaon("请求成功");
+        return homeNewCustom;
     }
 
 }
