@@ -26,16 +26,14 @@ public class HomeNewController {
     private HomeNewService homeNewService;
 
     /**
-     * 查看所有的商品列表
+     * 查看最新的json
      *
-     * @return 模型和视图
      * @throws Exception
      */
     @RequestMapping(value = "/queryNew", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
     public HomeNewCustom queryNew() throws Exception {
 
-//		//调用service查询商品列表
         List<HomeNew> itemsList = homeNewService.selectByExample(new HomeNewExample());
         HomeNewCustom homeNewCustom=new HomeNewCustom();
         homeNewCustom.setHomeNewList(itemsList);
