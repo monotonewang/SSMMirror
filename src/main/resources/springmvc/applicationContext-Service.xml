@@ -16,4 +16,10 @@
     <context:component-scan base-package="com.demo.springmvc.service"/>
     <context:component-scan base-package="com.demo.springmvc.service.impl"/>
 
+    <!--funki-->
+    <bean id="homeNewService" class="com.demo.fukiapi.home.service.HomeNewServiceImpl">
+    </bean>
+    <context:component-scan base-package="com.demo.fukiapi.home.service"/>
+    <context:component-scan base-package="com.demo.fukiapi.home.controller"/>
+
 </beans>

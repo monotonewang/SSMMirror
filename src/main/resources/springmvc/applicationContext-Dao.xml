@@ -42,7 +42,7 @@
         <!-- 配置扫描包的路径
         如果要扫描多个包，中间使用半角逗号分隔
          -->
-        <property name="basePackage" value="com.demo.springmvc.mapper"/>
+        <property name="basePackage" value="com.demo.springmvc.mapper,com.demo.fukiapi.home.mapper"/>
         <!-- 使用sqlSessionFactoryBeanName -->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
 

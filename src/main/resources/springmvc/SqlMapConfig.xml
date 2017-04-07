@@ -41,5 +41,6 @@
         <mapper resource="springmvc/ItemsMapperCustom.xml"/>
         <mapper resource="springmvc/ItemsMapper.xml"/>
         <mapper resource="springmvc/UserMapper.xml"/>
+        <mapper resource="funki/HomeNewMapper.xml"/>
     </mappers>
 </configuration>
