@@ -1,4 +1,4 @@
 # SSMMirror
-Spring Spring Mvc MyBatis
+Spring + MyBatis + Spring Mvc
 
 IntelliJ IDEA-->Maven Project
