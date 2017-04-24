@@ -3,9 +3,11 @@ package com.demo.fukiapi.home.mapper;
 import com.demo.fukiapi.home.po.HomeNew;
 import com.demo.fukiapi.home.po.HomeNewExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public interface HomeNewMapper {
     int countByExample(HomeNewExample example);
 
