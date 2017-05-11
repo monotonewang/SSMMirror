@@ -1,3 +1,4 @@
+一键同步远程仓库
  git fetch upstream
  git merge upstream/master
  git push

@@ -1,4 +1,5 @@
 
+如何生产成ssh
 cd .ssh
 ssh-keygen -t rsa
 ls

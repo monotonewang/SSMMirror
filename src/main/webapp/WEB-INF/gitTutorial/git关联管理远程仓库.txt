@@ -1,14 +1,14 @@
-Ç¨ÒÆÔ¶³Ì·ÖÖ§
+è¿ç§»è¿œç¨‹åˆ†æ”¯
 git remote set-url origin ssh://git-codecommit.us-west-2.amazonaws.com/v1/repos/TestAndroid
 git status
 git push
 
 
-1.ÔÚ±¾µØÎÄ¼ş¼ĞÏÂ ÓÒ¼ü´ò¿ª git Bash Here
-ÊäÈë git clone <remote url>
-2.¸´ÖÆÒª±»¹ÜÀíµÄÎÄ¼şµ½git²Ö¿âÏÂ
+1.åœ¨æœ¬åœ°æ–‡ä»¶å¤¹ä¸‹ å³é”®æ‰“å¼€ git Bash Here
+è¾“å…¥ git clone <remote url>
+2.å¤åˆ¶è¦è¢«ç®¡ç†çš„æ–‡ä»¶åˆ°gitä»“åº“ä¸‹
 2.git status
 3.git add -A
-4.git status ²é¿´Ìí¼ÓÎÄ¼şÊÇ·ñ±»git¹ÜÀí
+4.git status æŸ¥çœ‹æ·»åŠ æ–‡ä»¶æ˜¯å¦è¢«gitç®¡ç†
 5.git commit -m "info"
 6.git push
