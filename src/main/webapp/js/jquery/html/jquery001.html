@@ -7,20 +7,41 @@
     <script type="text/javascript" src="../jquery-3.2.1.js"></script>
     <!--<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/html/jquery-3.2.1.js"></script>-->
     <script type="text/javascript">
-        $(window).load(function () {
-            alert("ssss");
-
-        }
+        //        $(window).load(function () {
+        //            alert("ssss");
+        //
+        //        }
 
         //        var name = document.getElementById("buttons");
         //        name.innerHTML = "jquery alter name"
         //        name.onclick = function () {
         //            alert("name ");
         //        }
-        function loads() {
-            window.status = "Page is loaded"
-            alert("s");
-        }
+        //页面加载完成后执行该方法
+        //        function loads() {
+        //            window.status = "Page is loaded"
+        //            alert("s");
+        //        }
+
+        //将dom对象转成jquery对象，
+        //        var mybutton=jQuery("#buttons");
+        //
+        //        alert(mybutton);
+        //        alert(mybutton.html);
+        //        alert(mybutton.html());
+        //
+        //        var arr=[11,33,55];
+        //        $(arr).each(function () {
+        ////            alert(this);
+        //            //将html片段转化成jQuery对象
+        //            alert(jQuery("<div>流血不流泪</div>").html());
+        //        })\
+                jQuery(function () {
+//                    $("#mydiv").html("jquery test");
+                    $("#mydiv")[0].innerHTML = "jquery对象 转成 dom对象: 帅哥, 帅的睡不着";
+//                    document.getElementById("mydiv").innerHTML="js local test";
+                })
+
     </script>
 </head>
 <html>
@@ -29,5 +50,8 @@
 
 <input type="text" id="name" value="myname">
 <input type="button" id="buttons" value="mybutton">
+<div
+        id="mydiv" style="width: 300px"
+>123</div>
 </body>
 </html>
