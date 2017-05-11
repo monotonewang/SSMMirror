@@ -1,0 +1,14 @@
+迁移远程分支
+git remote set-url origin ssh://git-codecommit.us-west-2.amazonaws.com/v1/repos/TestAndroid
+git status
+git push
+
+
+1.在本地文件夹下 右键打开 git Bash Here
+输入 git clone <remote url>
+2.复制要被管理的文件到git仓库下
+2.git status
+3.git add -A
+4.git status 查看添加文件是否被git管理
+5.git commit -m "info"
+6.git push

@@ -1,0 +1,23 @@
+https://help.github.com/articles/fork-a-repo/
+
+ git remote add upstream xxxx.git
+ git fetch upstream
+
+ git merge upstream/master
+ git status
+
+git commit -m "xx"
+git push
+
+
+2.https://gist.github.com/CristinaSolana/1885435
+git pull upstream master
+
+ git merge origin/master --allow-unrelated-histories
+
+
+
+one command sync
+ git fetch upstream
+ git merge upstream/master
+ git push

@@ -1,0 +1,10 @@
+git config user.name
+git config user.email
+git config --global user.name "username"
+git config --global user.email "email"
+
+
+
+git config --global user.name "傅晴望"
+git config --global user.name "montotone"
+

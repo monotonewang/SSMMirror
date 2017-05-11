@@ -1,0 +1,7 @@
+git status
+git rm .idea --cached -r
+git rm app.iml --cached -r
+git add -A
+git status
+git commit -m "update gitignore"
+git push

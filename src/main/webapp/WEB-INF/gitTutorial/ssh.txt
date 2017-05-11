@@ -1,0 +1,37 @@
+https://help.github.com/articles/connecting-to-github-with-ssh/
+
+checking for existing ssh keys
+ls -al ~/.ssh
+
+github generating a new SSH key
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+chose different name 
+enter
+
+Adding yout SSH key to ssh-agent 
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/id_rsa
+
+Add the SSH key to GitHub Account
+
+Windows .ssh config
+  Host github.com
+  HostName ssh.github.com
+  Port 443
+ 
+  #Host gitlab.com
+	Host 192.168.100.100
+	RSAAuthentication yes
+	IdentityFile ~/.ssh/mail_rsa
+	User montotone
+	
+  AWS config
+  Host git-codecommit.*.amazonaws.com
+  User APKAJHAXILU5XNXVOW2Q
+  IdentityFile ~/.ssh/id_rsa
+  
+Testing your connection to github
+ssh -T git@github.com
+ 
+  	  local gitlab 
+  ssh -T git@192.168.100.100
