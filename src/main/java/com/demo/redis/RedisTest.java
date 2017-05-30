@@ -49,10 +49,12 @@ public class RedisTest {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxTotal(50);
         List<JedisShardInfo> shardInfoList = new ArrayList<JedisShardInfo>();
+//        shardInfoList.add(new JedisShardInfo("192.168.1.102", 6379));
         shardInfoList.add(new JedisShardInfo("127.0.0.1", 6379));
 
+        //connect refused
         //error connection
-//        shardInfoList.add(new JedisShardInfo("192.168.100.216",6379));
+//        shardInfoList.add(new JedisShardInfo("192.168.1.101",6379));
         //定义集群连接池
         ShardedJedisPool shardedJedisPool = new ShardedJedisPool(jedisPoolConfig, shardInfoList);
         ShardedJedis shardedJedis = null;
@@ -62,8 +64,8 @@ public class RedisTest {
             for(int i=0;i<100;i++){
                 shardedJedis.set("key_"+i,"value_"+i);
             }
-//            System.out.println(shardedJedis.get("key_18"));
-//            System.out.println(shardedJedis.get("key_20"));
+            System.out.println(shardedJedis.get("key_18"));
+            System.out.println(shardedJedis.get("key_20"));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
