@@ -11,7 +11,7 @@
         //            alert("ssss");
         //
         //        }
-
+                    $("buttons")
         //        var name = document.getElementById("buttons");
         //        name.innerHTML = "jquery alter name"
         //        name.onclick = function () {
@@ -41,14 +41,16 @@
                     $("#mydiv")[0].innerHTML = "jquery对象 转成 dom对象: 帅哥, 帅的睡不着";
 //                    document.getElementById("mydiv").innerHTML="js local test";
                 })
-
+        function myClick() {
+                alert("调用了");
+        }
     </script>
 </head>
 <html>
 <body onload="loads()">
 
 
-<input type="text" id="name" value="myname">
+<input type="text" id="name" value="myname" onclick="myClick()">
 <input type="button" id="buttons" value="mybutton">
 <div
         id="mydiv" style="width: 300px"
