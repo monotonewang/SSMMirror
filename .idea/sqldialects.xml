@@ -3,5 +3,6 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/sql/mybatis/home/home_new.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/sql/mybatis/items.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/sql/mysql/student.sql" dialect="MySQL" />
   </component>
 </project>
