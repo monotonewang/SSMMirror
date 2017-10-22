@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>append</title>
+    <script type="text/javascript" src="../../jquery-1.4.4.min.js">
+
+    </script>
+    <script type="text/javascript">
+        //        jQuery 对象 $ 它西崽window
+
+        jQuery(function ($) {
+//            alert($)
+            //郑州后面添加荆州
+//            $("#zhengzhou").append($("#jinzhou"))
+            //将郑州添加到荆州后面
+//            $("#zhengzhou").appendTo($("#jinzhou"))
+//            $("#zhengzhou").prepend($("#jinzhou"))
+//            $("#zhengzhou").prependTo($("#jinzhou"))
+            //将每个匹配之前的元素插入内容
+//            $("#zhengzhou").before($("#jinzhou"))
+//            $("#zhengzhou").after($("#jinzhou"))
+//            $("#zhengzhou").insertAfter($("#jinzhou"))
+            //把所有匹配到的元素插入到另一个元素前面
+            $("#zhengzhou").insertBefore($("#jinzhou"))
+
+        })
+    </script>
+</head>
+<body>
+<div>
+    <ul id="henan">
+        <li id="zhengzhou">郑州</li>
+        <li>商丘</li>
+        <li>濮阳</li>
+        <li>鹤壁</li>
+        <li>安阳</li>
+        <li>驻马店</li>
+        <li>新乡</li>
+        <li>周口</li>
+    </ul>
+    <ul id="hunan">
+        <li>宜昌</li>
+        <li>武汉</li>
+        <li id="jinzhou">荆州</li>
+    </ul>
+</div>
+
+</body>
+</html>
