@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>事件绑定</title>
+    <script type="text/javascript" src="../../jquery-1.4.4.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#bind").click(function () {
+//                $("div").bind("click",function () {
+                $("div").bind("mouseover", function () {
+//                    $(this).css("background", "blue")
+                    alert("bind success")
+                })
+            })
+            $("#unbind").click(function () {
+                $("div").unbind("mouseover")
+            })
+        })
+    </script>
+    <style type="text/css">
+        .redClass {
+            width: 100px;
+            height: 200px;
+            background-color: #6A6AFF;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="redClass">
+    这是一段文本
+</div>
+<input type="button" value="绑定事件" id="bind">
+<input type="button" value="解绑事件" id="unbind">
+</body>
+</html>

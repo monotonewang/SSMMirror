@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>包裹节点</title>
+    <script type="text/javascript" src="../../jquery-1.4.4.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#wrapButton").click(function () {
+//                $("p").wrap("<strong></strong>")
+//                $("p").wrapInner("<font color='red'></font>")
+                $("p").wrapAll("<font color='red'></font>")
+            })
+        })
+    </script>
+</head>
+<body>
+
+<input type="button" value="包裹节点" id="wrapButton">
+<p>包裹节点的内容</p>
+</body>
+</html>

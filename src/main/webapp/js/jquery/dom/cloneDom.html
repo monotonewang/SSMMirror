@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>cloneDom</title>
+    <script type="text/javascript" src="../../jquery-1.4.4.min.js">
+
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#cloneDom").click(function () {
+                //选择器
+                var p = $("#weather").clone()
+//                    var p = $("p").clone();
+                $("div").append(p);
+
+            })
+        })
+    </script>
+</head>
+<body>
+
+<input type="button" id="cloneDom" value="克隆">
+<p id="weather">今天天气晴</p>
+
+<div></div>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html charset=utf-8">
+    <title>事件</title>
+    <script type="text/javascript" src="../../jquery-1.4.4.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            //鼠标悬停事件
+//            $("ul>li").mouseover(function () {
+//                $(this).css("background", "red");
+//            })
+//            $("ul>li").mouseout(function () {
+//                $(this).css("background", "white");
+//            })
+            $("ul>li").hover(function () {
+                $(this).css("background", "red");
+            }), function () {
+                $(this).css("background", "white");
+            }
+
+            //搜索
+            //获取鼠标焦点
+            $("#keyword").focus();
+            //失去焦点事件
+            $("#keyword").blur(function () {
+                alert("失去焦点")
+                $(".message").hide(200);
+            })
+            //键盘事件
+            $("#keyword").bind("keyup", function () {
+//                alert($(this).val());
+                var keywords = $(this).val();
+                if (keywords) {
+                    //需要获取到值,发送ajax到后台;
+//                   回来数据
+                    $(".message").show(500);
+                } else {
+                    $(".message").hide(500);
+                }
+            })
+
+            //鼠标移入
+            $(".message>li").mouseover(function () {
+                $(".haosouClass").removeClass();
+                $(this).addClass("haosouClass")
+            });
+
+            //鼠标移开
+            $(".message>li").mouseout(function () {
+//                $(this).css("background", "white");
+                $(this).removeClass("haosouClass")
+            })
+            //使用jQuery监听键盘
+            $(window).keydown(function (event) {
+//                alert(event.keyCode)
+                switch (event.keyCode) {
+                    case 40://向下按键
+                        if ($(".haosouClass").size() == 0) {
+                            $(".message>li:first-child").addClass("haosouClass");
+                        } else {
+                            //如果下一个元素为0.则设置第一个,否则就设置下一个
+                            if ($(".haosouClass").next().size() == 0) {
+                                $(".message>li:first-child").addClass("haosouClass")
+                                $(".message>li:last-child").removeClass("haosouClass")
+                            } else {
+                                $(".haosouClass").removeClass("haosouClass").next().addClass("haosouClass")
+                            }
+                        }
+
+                        $("#keyword").val($(".haosouClass").text());
+
+                        break;
+                    case 13://enter
+
+                        break;
+                    case 38 ://TODO
+                        break;
+                }
+            })
+        })
+    </script>
+    <style type="text/css">
+        .jiangxi {
+            width: 200px;
+            height: 200px;
+            border: 1px solid red;
+        }
+
+        #keyword {
+            font-size: 20px;
+            width: 200px;
+
+        }
+
+        #searchButton {
+            width: 110px;
+            height: 80px;
+            font-size: 12px;
+            background: #ff7337;
+        }
+
+        .message {
+            width: 200px;
+            solid-color: red;
+            border: 1px solid chartreuse;
+            solid: 1px;
+            margin-top: -1px;
+            display: none;
+        }
+
+        .message li {
+            list-style: none;
+            padding: 5px;
+        }
+
+        .haosouClass {
+            /*鼠标变成一只手*/
+            cursor: pointer;
+            background: #66ff34;
+        }
+    </style>
+</head>
+
+<body>
+<input type="text" id="keyword">
+<input type="button" value="搜索一下" id="searchButton">
+<div class="message" align="left">
+    <li>上饶</li>
+    <li>南昌</li>
+    <li>赣州</li>
+    <li>鹰潭</li>
+    <li>新余</li>
+    <li>吉安</li>
+</div>
+<ul id="jiangxi" class="jiangxi">
+    <li>上饶</li>
+    <li>南昌</li>
+    <li>赣州</li>
+    <li>鹰潭</li>
+    <li>新余</li>
+    <li>吉安</li>
+</ul>
+</body>
+</html>

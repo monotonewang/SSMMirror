@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>事件的绑定和解绑</title>
+    <script type="text/javascript" src="../../jquery-1.4.4.min.js"></script>
+    <script type="text/javascript">
+        //        window.onload与 $(function () {})的区别
+
+        //        window.onload必须等到所有内容执行完毕,才能执行
+        //            $(function () {})会等所有的dom元素加载完成
+
+        //        window.onload.
+        $(function () {
+            test2();
+        })
+
+        function test1() {
+            alert("test1")
+        }
+
+        function test2() {
+            alert("test2")
+        }
+    </script>
+</head>
+<body onload="test1()">
+
+<input type="button" value="点击我" id="click">
+<div>
+    这是一段文本
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>css操作</title>
+    <script type="text/javascript" src="../../jquery-1.4.4.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            $("#cssOperation").click(function () {
+                //改变样式的第一种方式...追加样式.尽量使用第一种
+//                $("div").addClass("cssType")
+//                $("div").attr("class","cssType")
+                $("div").css("font-size", "28")
+            })
+            //一个class可以对应多个样式
+            $("#cssRemove").click(function () {
+//                $("div").removeClass();
+                //加上参数,删除指定的class
+                $("div").removeClass("cssDiv")
+            })
+            $("#cssHas").click(function () {
+                var hasCss = $("div").hasClass("cssDiv");
+                console.log(hasCss)
+            })
+            $("#cssToggle").click(function () {
+                //切换样式:控制样式上的重复切换,如果类名存在则删除它.如果类名不存在则添加它
+                $("div").toggleClass("cssType")
+            })
+            //hide()---show()
+//            $("div").toggle();
+        })
+    </script>
+    <style type="text/css">
+        .cssType {
+            background: red;
+        }
+
+        .cssDiv {
+            font-size: 28px;
+        }
+    </style>
+</head>
+<body>
+
+<input type="button" value="改变样式" id="cssOperation">
+<input type="button" value="移除样式" id="cssRemove">
+<input type="button" value="是否有样式" id="cssHas">
+<input type="button" value="切换样式" id="cssToggle">
+<div>hello jQuery</div>
+<div class="cssType cssDiv">hello jQuery</div>
+</body>
+</html>
